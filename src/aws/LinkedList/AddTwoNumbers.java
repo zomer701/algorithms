@@ -28,7 +28,8 @@ public class AddTwoNumbers
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2)
     {
-        ListNode save = null;
+        ListNode save = new ListNode(0);
+        ListNode temp = save;
         boolean count = false;
         while (l1 != null || l2 != null)
         {
@@ -39,18 +40,18 @@ public class AddTwoNumbers
 
             sum = count ? sum % 10 : sum;
 
-            if (save == null) {
-                save = new ListNode(sum);
-            } else {
-                save.next = new ListNode(sum);
-                save = save.next;
-            }
-
+            temp.next = new ListNode(sum);
 
             l1 = l1 != null ? l1.next : null;
             l2 = l2 != null ? l2.next : null;
+
+            temp = temp.next;
         }
 
-        return save;
+        if (count) {
+            temp.next = new ListNode(1);
+        }
+
+        return save.next;
     }
 }

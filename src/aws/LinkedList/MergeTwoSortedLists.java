@@ -1,8 +1,8 @@
-public class ZipperList {
+public class MergeTwoSortedLists {
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(3);
+        ListNode node2 = new ListNode(1);
         ListNode node3 = new ListNode(5);
         ListNode node4 = new ListNode(7);
 
@@ -11,16 +11,16 @@ public class ZipperList {
         node3.next = node4;
 
         ListNode node21 = new ListNode(2);
-        ListNode node22 = new ListNode(4);
+        ListNode node22 = new ListNode(3);
         ListNode node23 = new ListNode(6);
-        ListNode node24 = new ListNode(8);
+        ListNode node24 = new ListNode(7);
 
         node21.next = node22;
         node22.next = node23;
         node23.next = node24;
 
 
-        ListNode current = new ZipperList().zip(node1, node21);
+        ListNode current = new MergeTwoSortedLists().mergeTwoLists(node1, node21);
         while (current != null)
         {
             System.out.println(current.val);
@@ -37,7 +37,7 @@ public class ZipperList {
 //2 next -> 1
 //1 next -> null
 
-    public ListNode zip(ListNode node1, ListNode node21) {
+    public ListNode mergeTwoLists(ListNode node1, ListNode node21) {
 
         if (node1 == null) {
             return node21;
@@ -47,35 +47,33 @@ public class ZipperList {
             return node1;
         }
 
+        ListNode tail = new ListNode(0);
+        ListNode temp = tail;
 
-        ListNode tail = node1;
-        ListNode current1 = node1.next;
-        ListNode current2 = node21;
-
-        boolean check = false;
-
-        while (current1 != null && current2 !=null)
+        while (node1 != null && node21 !=null)
         {
-            if (check) {
-                tail.next = current1;
-                current1 = current1.next;
+            int check1 = node1.val;
+            int check2 = node21.val;
+
+            if (check1 <= check2) {
+                temp.next = node1;
+                node1 = node1.next;
             } else {
-                tail.next = current2;
-                current2 = current2.next;
+                temp.next = node21;
+                node21 = node21.next;
             }
 
-            tail = tail.next;
-            check = !check;
+            temp = temp.next;
         }
 
-        if (current1 != null) {
-            tail.next = current1;
+        if (node1 != null) {
+            temp.next = node1;
         }
 
-        if (current2 != null) {
-            tail.next = current2;
+        if (node21 != null) {
+            temp.next = node21;
         }
 
-        return node1;
+        return tail.next;
     }
 }
