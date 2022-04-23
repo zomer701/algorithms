@@ -8,8 +8,8 @@ public class ReverseLinkedListRecurtion {
         node1.next = node2;
         node2.next = node3;
 
-        System.out.println("new node1");
-        ListNode result = new ReverseLinkedListRecurtion().reverseList(node1);
+        ListNode prev = null;
+        ListNode result = new ReverseLinkedListRecurtion().reverseList(node1, prev);
         while (result != null)
         {
             System.out.println(result.val);
@@ -24,14 +24,13 @@ public class ReverseLinkedListRecurtion {
 //2 next -> 1
 //1 next -> null
 
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
+    public ListNode reverseList(ListNode head, ListNode prev) {
+        if (head == null) {
+            return prev;
         }
 //3
-        ListNode data = reverseList(head.next);
-        head.next.next = head;
-        head.next = null;
-        return data;
+        ListNode next = head.next;
+        head.next = prev;
+        return reverseList(next, head);
     }
 }

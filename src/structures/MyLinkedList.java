@@ -82,7 +82,28 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		//TODO: FILL THIS IN!
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		Node node = head;
+		Node prev = null;
+		for (int i=0; i<=index; i++) {
+			if (index == i)
+			{
+				Node newNode = new Node(element);
+				newNode.next = node.next;
+				if (prev != null)
+				{
+					prev.next = newNode;
+				}
+				node = newNode.next;
+			} else {
+				prev = node;
+				node = node.next;
+			}
+
+		}
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public class MyArrayListTest {
 			mylist.add(i);
 		}
 		//System.out.println(Arrays.toString(mal.toArray()));
-		assertThat(mylist.get(18), is(new Integer(19)));
+		assertThat(mylist.get(18), is(19));
 	}
 
 	/**
@@ -241,19 +241,19 @@ public class MyArrayListTest {
 	@Test
 	public void testSet() {
 		Integer val = mylist.set(1, 5);
-		assertThat(val, is(new Integer(2)));
+		assertThat(val, is(2));
 
 		val = mylist.set(0, 6);
-		assertThat(val, is(new Integer(1)));
+		assertThat(val, is(1));
 
 		val = mylist.set(2, 7);
-		assertThat(val, is(new Integer(3)));
+		assertThat(val, is(3));
 
 		// return value should be 2
 		// list should be [6, 5, 7]
-		assertThat(mylist.get(0), is(new Integer(6)));
-		assertThat(mylist.get(1), is(new Integer(5)));
-		assertThat(mylist.get(2), is(new Integer(7)));
+		assertThat(mylist.get(0), is(6));
+		assertThat(mylist.get(1), is(5));
+		assertThat(mylist.get(2), is(7));
 		//System.out.println(Arrays.toString(mal.toArray()));
 
 		try {
