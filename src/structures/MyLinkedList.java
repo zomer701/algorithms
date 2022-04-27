@@ -82,28 +82,38 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
+
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
 
+		Node newNode = new Node(element);
+
+		if (head == null)
+		{
+			head = newNode;
+			return;
+		}
+
+		if (index == 0)
+		{
+			newNode.next = head;
+			head = newNode;
+			size++;
+			return;
+		}
+
 		Node node = head;
 		Node prev = null;
-		for (int i=0; i<=index; i++) {
-			if (index == i)
-			{
-				Node newNode = new Node(element);
-				newNode.next = node.next;
-				if (prev != null)
-				{
-					prev.next = newNode;
-				}
-				node = newNode.next;
-			} else {
-				prev = node;
-				node = node.next;
-			}
-
+		for (int i=0; i<index; i++)
+		{
+			prev = node;
+			node = node.next;
 		}
+
+		newNode.next = node;
+		prev.next = newNode;
+		size++;
 	}
 
 	@Override
@@ -164,7 +174,14 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		//TODO: FILL THIS IN!
+		Node node = head;
+		for (int i=0; i<size; i++) {
+			if (equals(target, node.data))
+			{
+				return i;
+			}
+			node = node.next;
+		}
 		return -1;
 	}
 
@@ -173,7 +190,7 @@ public class MyLinkedList<E> implements List<E> {
 	 * Handles the special case that the target is null.
 	 *
 	 * @param target
-	 * @param object
+	 * @param element
 	 */
 	private boolean equals(Object target, Object element) {
 		if (target == null) {
@@ -229,8 +246,30 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public E remove(int index) {
-		//TODO: FILL THIS IN!
-		return null;
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		if (index == 0)
+		{
+			E data = head.data;
+			head = head.next;
+			size--;
+			return data;
+		}
+
+		Node node = head;
+		Node prev = null;
+		for (int i=0; i<index; i++)
+		{
+			prev = node;
+			node = node.next;
+		}
+
+		E data = node.data;
+		prev.next = node.next;
+		size--;
+		return data;
 	}
 
 	@Override

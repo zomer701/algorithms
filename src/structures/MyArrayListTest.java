@@ -80,9 +80,9 @@ public class MyArrayListTest {
 		//System.out.println(Arrays.toString(mal.toArray()));
 		assertThat(mylist.get(0), is(6));
 
-		mylist.add(5, 7);
+		mylist.add(4, 7);
 		//System.out.println(Arrays.toString(mal.toArray()));
-		assertThat(mylist.get(5), is(new Integer(7)));
+		assertThat(mylist.get(4), is(7));
 	}
 
 	/**
@@ -191,25 +191,25 @@ public class MyArrayListTest {
 	 */
 	@Test
 	public void testRemoveObject() {
-		boolean flag = mylist.remove(new Integer(2));
+		boolean flag = mylist.remove(Integer.valueOf(2));
 		assertThat(flag, equalTo(true));
 		assertThat(mylist.size(), is(2));
 		assertThat(mylist.get(1), is(new Integer(3)));
 		//System.out.println(Arrays.toString(mal.toArray()));
 
-		flag = mylist.remove(new Integer(1));
+		flag = mylist.remove(Integer.valueOf(1));
 		assertThat(flag, equalTo(true));
 		assertThat(mylist.size(), is(1));
-		assertThat(mylist.get(0), is(new Integer(3)));
+		assertThat(mylist.get(0), is(3));
 		//System.out.println(Arrays.toString(mal.toArray()));
 
-		flag = mylist.remove(new Integer(5));
+		flag = mylist.remove(Integer.valueOf(5));
 		assertThat(flag, equalTo(false));
 		assertThat(mylist.size(), is(1));
-		assertThat(mylist.get(0), is(new Integer(3)));
+		assertThat(mylist.get(0), is(3));
 		//System.out.println(Arrays.toString(mal.toArray()));
 
-		flag = mylist.remove(new Integer(3));
+		flag = mylist.remove(Integer.valueOf(3));
 		assertThat(flag, equalTo(true));
 		assertThat(mylist.size(), is(0));
 		//System.out.println(Arrays.toString(mal.toArray()));
