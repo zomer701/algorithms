@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class UniquePaths {
     public static void main(String[] args) {
-        System.out.println(new UniquePaths().uniquePaths(2, 2));
+        System.out.println(new UniquePaths().uniquePaths(3, 2));
     }
 
     public int uniquePaths(int m, int n) {
