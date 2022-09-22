@@ -52,13 +52,13 @@ public class NQueen {
         }
 
         for (i =row ,j = col; i>0 && j > 0; i--, j--) {
-            if (board[row][i] == 1) {
+            if (board[i][j] == 1) {
                 return false;
             }
         }
 
         for (i =row ,j = col; i<n && j > 0; i++, j--) {
-            if (board[row][i] == 1) {
+            if (board[i][j] == 1) {
                 return false;
             }
         }
