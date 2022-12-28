@@ -19,8 +19,6 @@ public class Leetcode_22 {
     }
 
     private static void generateParenthesis(List<String> result, String s, int open, int close, int n) {
-        System.out.println(s);
-        // Base case
         if (open == n && close == n) {
             result.add(s);
             return;
