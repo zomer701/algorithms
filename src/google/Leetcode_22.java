@@ -32,4 +32,27 @@ public class Leetcode_22 {
             generateParenthesis(result, s + ")", open, close + 1, n);
         }
     }
+
+    public static List<String> generate2(int nr) {
+        List<String> data = new ArrayList<>();
+
+        embrace(nr, nr, new char[nr * 2], 0, data);
+
+        return data;
+    }
+
+    private static void embrace(int left, int right, char[] str, int index, List<String> result) {
+        if (right < left || left < 0) {
+            return;
+        }
+
+        if (left == 0 && right == 0) {
+            result.add(String.valueOf(str));
+        } else {
+            str[index] = '{';
+            embrace(left - 1, right, str, index+1, result);
+            str[index] = '}';
+            embrace(left, right-1, str, index+1, result);
+        }
+    }
 }
