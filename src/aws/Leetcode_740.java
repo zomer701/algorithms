@@ -1,56 +1,53 @@
 package aws;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Leetcode_740 {
     public static void main(String[] args) {
-        int [] data = {3,4,2};
+        int[] data = {3, 1};
         System.out.println(new Leetcode_740().deleteAndEarn(data));
     }
 
-    public int deleteAndEarn(int[] nums) {
-        int N = nums.length;
-
-        if  (nums.length < 1) {
-            return 0;
-        }
-
-        Map<Integer, Integer> count = new HashMap<>();
-        for (int val: nums) {
-            count.put(val, count.getOrDefault(val, 0) + 1);
-        }
-
-
-        int[] memo = new int[N + 1];
-        memo[0] = 0;
-
-        for(int i = 1; i < N - 1; i++){
-            // Same as the recursive solution.
-            memo[i] = Math.max(memo[i - 1], ((i > 1) ? nums[i - 2] : 0) + nums[i] * count.get(nums[i]));
-        }
-
-        return memo[N];
-
+    public Leetcode_740() {
     }
 
-//    public int rob(int[] nums) {
-//        int N = nums.length;
-//
-//        if  (nums.length < 1) {
-//            return 0;
-//        }
-//
-//        int[] memo = new int[N];
-//        memo[N] = 0;
-//        memo[N-1] = nums[N-1];
-//
-//        for (int i = N - 2; i >= 0; --i) {
-//
-//            // Same as the recursive solution.
-//            memo[i] = Math.max(memo[i + 1], memo[i + 2] + nums[i]);
-//        }
-//
-//        return memo[0];
-//    }
+    public int deleteAndEarn(int[] nums) {
+        HashMap<Integer, Integer> points = new HashMap<>();
+
+        // Precompute how many points we gain from taking an element
+        for (int num : nums) {
+            points.put(num, points.getOrDefault(num, 0) + num);
+        }
+
+        List<Integer> elements = new ArrayList<Integer>(points.keySet());
+        Collections.sort(elements);
+
+        // Base cases
+        int twoBack = 0;
+        int oneBack = points.get(elements.get(0));
+
+        for (int i = 1; i < elements.size(); i++) {
+            int currentElement = elements.get(i);
+            int temp = oneBack;
+            if (currentElement == elements.get(i - 1) + 1) {
+                // The 2 elements are adjacent, cannot take both - apply normal recurrence
+                oneBack = Math.max(oneBack, twoBack + points.get(currentElement));
+            } else {
+                // Otherwise, we don't need to worry about adjacent deletions
+                oneBack += points.get(currentElement);
+            }
+
+            twoBack = temp;
+        }
+
+        return oneBack;
+    }
 }
