@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Leetcode_740 {
     public static void main(String[] args) {
-        int[] data = {3, 1};
+        int[] data = {2,2,3,3,3,4};
         System.out.println(new Leetcode_740().deleteAndEarn(data));
     }
 
@@ -30,6 +30,8 @@ public class Leetcode_740 {
         List<Integer> elements = new ArrayList<Integer>(points.keySet());
         Collections.sort(elements);
 
+        int result = 0;
+
         // Base cases
         int twoBack = 0;
         int oneBack = points.get(elements.get(0));
@@ -37,17 +39,15 @@ public class Leetcode_740 {
         for (int i = 1; i < elements.size(); i++) {
             int currentElement = elements.get(i);
             int temp = oneBack;
-            if (currentElement == elements.get(i - 1) + 1) {
-                // The 2 elements are adjacent, cannot take both - apply normal recurrence
-                oneBack = Math.max(oneBack, twoBack + points.get(currentElement));
+            if (currentElement-1 == elements.get(i-1)) {
+                oneBack = Math.max(oneBack , currentElement+twoBack);
             } else {
-                // Otherwise, we don't need to worry about adjacent deletions
-                oneBack += points.get(currentElement);
+                oneBack += currentElement;
             }
 
             twoBack = temp;
         }
 
-        return oneBack;
+        return result;
     }
 }
