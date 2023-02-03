@@ -1,5 +1,6 @@
 public class EnenFirst {
 
+    //перенести делиние на 2 в начало
     void evenFirst(int [] arr) {
         int poin1 = 0;
         int poin2 = arr.length-1;
@@ -12,7 +13,6 @@ public class EnenFirst {
                 arr[poin1] =  arr[poin2];
                 arr[poin2--] = temp;
             }
-
         }
     }
 }
