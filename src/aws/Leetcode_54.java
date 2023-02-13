@@ -19,12 +19,12 @@ public class Leetcode_54 {
         int down = rows - 1;
 
         while (result.size() < rows*columns) {
-            for (int col = left; col<right; col++ ) {
-                result.add(matrix[up][col]);
+            for (int i = left; i <= right; i++) {
+                result.add(matrix[up][i]);
             }
 
-            for (int row = up; row<down; row++ ) {
-                result.add(matrix[row][right]);
+            for (int i = up; i <= down; i++) {
+                result.add(matrix[i][right]);
             }
 
             if (up != down) {
@@ -40,6 +40,7 @@ public class Leetcode_54 {
                     result.add(matrix[row][left]);
                 }
             }
+
 
             left++;
             right--;
