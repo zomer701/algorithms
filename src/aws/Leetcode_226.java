@@ -6,7 +6,6 @@ public class Leetcode_226 {
     }
     public TreeNode invertTree(TreeNode root) {
         invertTreeData(root);
-
         return root;
     }
 
@@ -23,4 +22,6 @@ public class Leetcode_226 {
         invertTreeData(root.right);
 
     }
+
+
 }
