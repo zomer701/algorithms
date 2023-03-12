@@ -1,7 +1,9 @@
 package aws;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,21 +16,27 @@ public class Leetcode_139 {
     }
 
     public boolean wordBreak(String s, List<String> wordDict) {
-        return wordBreakMemo(s, new HashSet<>(wordDict), 0, new Boolean[s.length()]);
-    }
+        List<String> dp[] = new ArrayList[s.length()+1];
+        dp[0] = new ArrayList<String>();
 
-    private boolean wordBreakMemo(String s, Set<String> wordDict, int start, Boolean[] memo) {
-        if (start == s.length()) {
-            return true;
-        }
-        if (memo[start] != null) {
-            return memo[start];
-        }
-        for (int end = start + 1; end <= s.length(); end++) {
-            if (wordDict.contains(s.substring(start, end)) && wordBreakMemo(s, wordDict, end, memo)) {
-                return memo[start] = true;
+        for(int i=0; i<s.length(); i++) {
+            if (dp[i] == null)
+                continue;
+            for (String word : wordDict) {
+                int len = word.length();
+                int end = i + len;
+                if (end > s.length())
+                    continue;
+                if(s.substring(i,end).equals(word)){
+                    if(dp[end] == null){
+                        dp[end] = new ArrayList<String>();
+                    }
+                    dp[end].add(word);
+                }
             }
         }
-        return memo[start] = false;
+
+
+        return dp[s.length()] != null;
     }
 }
