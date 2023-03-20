@@ -2,26 +2,17 @@ package aws;
 
 public class Leetcode_198 {
     public static void main(String[] args) {
-
+        System.out.println(rob(new int []{1,2,3,1}));
     }
 
-    public int rob(int[] nums) {
-        int N = nums.length;
-
-        if  (nums.length < 1) {
-            return 0;
+    static int rob(int[] nums) {
+        int n = nums.length;
+        // dp[i] = x: start rob at i-th house, the maximum money you can get is x
+        // base case: dp[n] = 0
+        int[] dp = new int[n + 2];
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i] = Math.max(dp[i + 1], nums[i] + dp[i + 2]);
         }
-
-        int[] memo = new int[N];
-        memo[N] = 0;
-        memo[N-1] = nums[N-1];
-
-        for (int i = N - 2; i >= 0; --i) {
-
-            // Same as the recursive solution.
-            memo[i] = Math.max(memo[i + 1], memo[i + 2] + nums[i]);
-        }
-
-        return memo[0];
+        return dp[0];
     }
 }
