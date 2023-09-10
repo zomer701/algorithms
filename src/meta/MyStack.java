@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class MyStack {
-        private Queue<Integer> queueOne;
-        private Queue<Integer> queueSecond;
+        private final Queue<Integer> queueOne;
+        private final Queue<Integer> queueSecond;
 
 
         public MyStack() {
