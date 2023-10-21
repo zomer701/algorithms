@@ -17,7 +17,7 @@ public class Leetcode_141 {
         three.next = two;
         mfour.next = two;
 
-        System.out.println(new Leetcode_141().hasCycle(three));
+        System.out.println(new Leetcode_141().hasCycleV2(three));
     }
 
     public boolean hasCycle(NodeNext head) {
@@ -42,13 +42,17 @@ public class Leetcode_141 {
 
         NodeNext slow = head;
         NodeNext fast = head.next;
-        while (slow != fast) {
-            if (fast == null || fast.next == null) {
-                return false;
+        while (fast != null && fast.next != null &&  fast.next.next != null) {
+            if (slow == null) {
+                slow = head;
+            }
+            if (slow.equals(fast)) {
+                return true;
             }
             slow = slow.next;
             fast = fast.next.next;
+
         }
-        return true;
+        return false;
     }
 }
