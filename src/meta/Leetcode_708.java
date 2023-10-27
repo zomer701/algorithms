@@ -12,7 +12,7 @@ public class Leetcode_708 {
         four.next = one;
 
 
-        NodeNext test = new Leetcode_708().insert(null, 2);
+        NodeNext test = new Leetcode_708().insert(three, 2);
         while (test != null) {
             System.out.println(test.val);
             test = test.next;
@@ -28,14 +28,25 @@ public class Leetcode_708 {
         }
 
         NodeNext cur = head;
-        while (cur.next != head) {
-            if (cur.val <= val && val <= cur.next.val) break;
-            if (cur.val > cur.next.val && (cur.val < val || val < cur.next.val)) break;
+        while (cur != head.next) {
+            if (cur.val >= val && cur.next != null && cur.next.val >= val) {
+                break;
+            }
+
+            if (cur.val <= val && cur.next != null && cur.next.val <= val) {
+                break;
+            }
+
+
             cur = cur.next;
         }
 
-        node.next = cur.next;
-        cur.next = node;
+        NodeNext next = cur.next;
+        NodeNext newNode = new NodeNext(val);
+        cur.next = newNode;
+        newNode.next = next;
+
+
         return head;
     }
 }
