@@ -1,37 +1,32 @@
 package trello;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Leetcode_643 {
 
     public static void main(String[] args) {
-        int [] nums = {1,12,-5,-6,50,3};
-        int k = 4;
+        int [] nums = {-1};
+        int k = 1;
 
         System.out.println(findMaxAverage(nums, k));
     }
     public static double findMaxAverage(int[] nums, int k) {
 
-        int result = 0;
-        int count = 0;
-        int ans = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            result += nums[i];
-            count++;
+        double max =  Integer.MIN_VALUE;
 
-            if (count == k) {
-                ans = result > ans ? result : ans;
-            }
-
-            if (count > k) {
-                result -= nums[i-k];
-                ans = result > ans ? result : ans;
-            }
-
-
+        double sum = 0;
+        for (int j = 0; j < k; j++) {
+            sum+=nums[j];
         }
 
-        return (double) ans/k;
+
+        max = Math.max(sum, max);
+
+        for (int i = 1; i+k-1 < nums.length; i++) {
+            sum-=nums[i-1];
+            sum+=nums[i+k-1];
+            max = Math.max(sum, max);
+        }
+
+
+        return max/k;
     }
 }
