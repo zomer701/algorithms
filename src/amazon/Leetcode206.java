@@ -24,4 +24,15 @@ public class Leetcode206 {
 
         return prev;
     }
+
+    public ListNode reverseList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode  p = reverseList2(head.next);
+        head.next.next = head;
+        head.next = null;
+
+        return p;
+    }
 }
