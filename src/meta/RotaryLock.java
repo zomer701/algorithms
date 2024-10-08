@@ -13,11 +13,11 @@ public class RotaryLock {
         int prev = 1;
 
         for (int step: C) {
-            if (prev != step) {
-                int nextStep = Math.abs(Math.min(step - prev, (N-step)+prev));
+
+                int val = Math.abs(step - prev);
+                int nextStep = Math.min(val, N-val);
                 result += nextStep;
                 prev = step;
-            }
         }
 
         return result;
