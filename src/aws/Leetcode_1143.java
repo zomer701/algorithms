@@ -1,34 +1,27 @@
 package aws;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 public class Leetcode_1143 {
-    int dp[][]=new int[1001][1001];
+
     public static void main(String[] args) {
         System.out.println(new Leetcode_1143().longestCommonSubsequence("ixefcvarevabmfabqfivodqfaluxqp","cxwfkzyxabytijcnohgzgbchwpshwnu"));
     }
 
     public int longestCommonSubsequence(String text1, String text2) {
+        int text1l = text1.length();
+        int text2l = text2.length();
+        int[][] dp = new int[text1l+1][text2l+1];
 
-            return dp(0, 0, text1, text2);
-    }
-
-    private int dp(int index, int index2, String text1, String text2) {
-        if (index >= text1.length() || index2 >= text2.length()) {
-            return 0;
+        for (int i = 1; i <=text1l; i++) {
+            for (int j = 1; j <= text2l; j++) {
+                if (text1.charAt(i-1) == text2.charAt(j-1)) {
+                    dp[i][j] =  1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
         }
 
-        if(dp[index][index2]!=0)return dp[index][index2];
-
-        if (text1.charAt(index) == text2.charAt(index2)) {
-            dp[index][index2] = 1 + dp(index + 1, index2 + 1, text1, text2);
-        } else {
-            dp[index][index2] = Math.max(dp(index, index2 + 1, text1, text2), dp(index + 1, index2, text1, text2));
-        }
-
-
-        return dp[index][index2];
+        return dp[text1l][text2l];
     }
+
 }

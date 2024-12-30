@@ -1,297 +1,90 @@
-package structures; /**
- * 
- */
+package structures;
 
+public class MyLinkedList {
+    private SinglyListNode head;
+    public MyLinkedList() {
+        head = null;
+    }
+    public int get(int index) {
+        SinglyListNode node = getNode(index);
+        return node != null ? node.val : -1;
+    }
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+    private SinglyListNode getNode(int index) {
+        if (index < 0) {
+            return null;
+        }
 
-/**
- * @author downey
- * @param <E>
- *
- */
-public class MyLinkedList<E> implements List<E> {
+        if (index == 0) {
+            return head;
+        }
 
-	/**
-	 * Node is identical to ListNode from the example, but parameterized with T
-	 *
-	 * @author downey
-	 *
-	 */
-	private class Node {
-		public E data;
-		public Node next;
+        SinglyListNode temp = head;
+        while (temp != null && --index >= 0) {
+            temp = temp.next;
+        }
 
-		public Node(E data) {
-			this.data = data;
-			this.next = null;
-		}
-		@SuppressWarnings("unused")
-		public Node(E data, Node next) {
-			this.data = data;
-			this.next = next;
-		}
-		public String toString() {
-			return "Node(" + data.toString() + ")";
-		}
-	}
+        return temp;
+    }
 
-	private int size;            // keeps track of the number of elements
-	private Node head;           // reference to the first node
+    public void addAtHead(int val) {
+        SinglyListNode newHead = new SinglyListNode(val);
+        newHead.next = head;
+        head = newHead;
+    }
 
-	/**
-	 *
-	 */
-	public MyLinkedList() {
-		head = null;
-		size = 0;
-	}
+    public void addAtTail(int val) {
+        if (head == null) {
+            head = new SinglyListNode(val);
+        } else {
+            SinglyListNode temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next =  new SinglyListNode(val);
+        }
+    }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// run a few simple tests
-		List<Integer> mll = new MyLinkedList<Integer>();
-		mll.add(1);
-		mll.add(2);
-		mll.add(3);
-		System.out.println(Arrays.toString(mll.toArray()) + " size = " + mll.size());
+    public void addAtIndex(int index, int val) {
 
-		mll.remove(new Integer(2));
-		System.out.println(Arrays.toString(mll.toArray()) + " size = " + mll.size());
-	}
+        if (index == 0) {
+            addAtHead(val);
+            return;
+        }
 
-	@Override
-	public boolean add(E element) {
-		if (head == null) {
-			head = new Node(element);
-		} else {
-			Node node = head;
-			// loop until the last node
-			for ( ; node.next != null; node = node.next) {}
-			node.next = new Node(element);
-		}
-		size++;
-		return true;
-	}
+        SinglyListNode prevNode = getNode(index-1);
+        if (prevNode != null) {
+            SinglyListNode next = prevNode.next;
+            SinglyListNode newNode = new SinglyListNode(val);
+            newNode.next = next;
+            prevNode.next = newNode;
+        }
+    }
 
-	@Override
-	public void add(int index, E element) {
-		if (index == 0) {
-			head = new Node(element, head);
-		} else {
-			Node node = getNode(index-1);
-			node.next = new Node(element, node.next);
-		}
+    public void deleteAtIndex(int index) {
 
-		size++;
-	}
+        if (index == 0 && head != null) {
+            head = head.next;
+            return;
+        }
 
-	@Override
-	public boolean addAll(Collection<? extends E> collection) {
-		boolean flag = true;
-		for (E element: collection) {
-			flag &= add(element);
-		}
-		return flag;
-	}
+        SinglyListNode node = getNode(index-1);
+        if (node != null && node.next != null) {
+            node.next = node.next.next;
+        }
+    }
 
-	@Override
-	public boolean addAll(int index, Collection<? extends E> collection) {
-		throw new UnsupportedOperationException();
-	}
+    public void print() {
+        SinglyListNode temp = head;
+        while (temp != null) {
+            System.out.println(temp.val);
+            temp = temp.next;
+        }
+    }
 
-	@Override
-	public void clear() {
-		head = null;
-		size = 0;
-	}
-
-	@Override
-	public boolean contains(Object obj) {
-		return indexOf(obj) != -1;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> collection) {
-		for (Object obj: collection) {
-			if (!contains(obj)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public E get(int index) {
-		Node node = getNode(index);
-		return node.data;
-	}
-
-	/** Returns the node at the given index.
-	 * @param index
-	 * @return
-	 */
-	private Node getNode(int index) {
-		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException();
-		}
-		Node node = head;
-		for (int i=0; i<index; i++) {
-			node = node.next;
-		}
-		return node;
-	}
-
-	@Override
-	public int indexOf(Object target) {
-		Node node = head;
-		for (int i=0; i<size; i++) {
-			if (equals(target, node.data))
-			{
-				return i;
-			}
-			node = node.next;
-		}
-		return -1;
-	}
-
-	/** Checks whether an element of the array is the target.
-	 *
-	 * Handles the special case that the target is null.
-	 *
-	 * @param target
-	 * @param element
-	 */
-	private boolean equals(Object target, Object element) {
-		if (target == null) {
-			return element == null;
-		} else {
-			return target.equals(element);
-		}
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return size == 0;
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		E[] array = (E[]) toArray();
-		return Arrays.asList(array).iterator();
-	}
-
-	@Override
-	public int lastIndexOf(Object target) {
-		Node node = head;
-		int index = -1;
-		for (int i=0; i<size; i++) {
-			if (equals(target, node.data)) {
-				index = i;
-			}
-			node = node.next;
-		}
-		return index;
-	}
-
-	@Override
-	public ListIterator<E> listIterator() {
-		return null;
-	}
-
-	@Override
-	public ListIterator<E> listIterator(int index) {
-		return null;
-	}
-
-	@Override
-	public boolean remove(Object obj) {
-		int index = indexOf(obj);
-		if (index == -1) {
-			return false;
-		}
-		remove(index);
-		return true;
-	}
-
-	@Override
-	public E remove(int index) {
-		E el = get(index);
-		if (index == 0) {
-			head = head.next;
-		} else {
-			Node node = getNode(index-1);
-			node.next = node.next.next;
-		}
-
-		size--;
-		return el;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> collection) {
-		boolean flag = true;
-		for (Object obj: collection) {
-			flag &= remove(obj);
-		}
-		return flag;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> collection) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public E set(int index, E element) {
-		Node node = getNode(index);
-		E old = node.data;
-		node.data = element;
-		return old;
-	}
-
-	@Override
-	public int size() {
-		return size;
-	}
-
-	@Override
-	public List<E> subList(int fromIndex, int toIndex) {
-		if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) {
-			throw new IndexOutOfBoundsException();
-		}
-		// TODO: classify this and improve it.
-		int i = 0;
-		MyLinkedList<E> list = new MyLinkedList<E>();
-		for (Node node=head; node != null; node = node.next) {
-			if (i >= fromIndex && i <= toIndex) {
-				list.add(node.data);
-			}
-			i++;
-		}
-		return list;
-	}
-
-	@Override
-	public Object[] toArray() {
-		Object[] array = new Object[size];
-		int i = 0;
-		for (Node node=head; node != null; node = node.next) {
-			// System.out.println(node);
-			array[i] = node.data;
-			i++;
-		}
-		return array;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		throw new UnsupportedOperationException();
-	}
+    public class SinglyListNode {
+        public int val;
+        public SinglyListNode next;
+        public SinglyListNode(int x) { val = x; }
+    }
 }
