@@ -26,28 +26,30 @@ public class Leetcode743 {
             timeGraph.computeIfAbsent(time[0], l -> new ArrayList<>()).add(new int[]{time[1], time[2]});
         }
 
-        Set<Integer> memo = new HashSet<>();
+        Set<Integer> used = new HashSet<>();
         int result = 0;
 
-        while (!queue.isEmpty() && memo.size() < n) {
-            int[] cur = queue.poll();
-            int dist = cur[0];
-            int node = cur[1];
+        while (!queue.isEmpty() && used.size() < n) {
+            int[] current = queue.poll();
+            int w = current[0];
+            int s = current[1];
 
-            if (memo.contains(node)) continue;
+            if (used.contains(s)) {
+                continue;
+            }
 
-            memo.add(node);
-            result = dist;
+            result = w;
+            used.add(s);
 
-            for (int[] edge : timeGraph.getOrDefault(node, Collections.emptyList())) {
+            for (int[] edge : timeGraph.getOrDefault(s, Collections.emptyList())) {
                 int next = edge[0];
-                int w = edge[1];
-                if (!memo.contains(next)) {
-                    queue.offer(new int[]{dist + w, next});
+                int wedge = edge[1];
+                if (!used.contains(next)) {
+                    queue.offer(new int[]{wedge + w, next});
                 }
             }
         }
 
-        return memo.size() != n ? -1 : result;
+        return used.size() == n ? result : - 1;
     }
 }
